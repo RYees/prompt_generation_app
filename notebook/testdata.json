@@ -1,0 +1,10 @@
+[
+{
+    "prompt": "Interpret the clause 'Party A indemnifies Party B'",
+    "answer": "Party A will compensate Party B for any loss or damage"
+},
+{
+    "prompt": "Elucidate 'This contract is governed by the laws of State X'",
+    "answer": "The contract will follow the legal regulations of State X"
+}
+]

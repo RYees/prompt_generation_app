@@ -28,10 +28,10 @@ class ChunkingApproaches:
     def chunking_RecursiveCharacterTextSplitter(pdf_doc):
         text = '\n\n'.join([page.page_content for page in pdf_doc])
         text_splitter = RecursiveCharacterTextSplitter(
-            separators=["\n\n","\n", " "],
-            chunk_size = 200,
-            chunk_overlap = 100,
-            length_function = len(text),
+            separators=["\n\n", "\n", " "],
+            chunk_size=200,
+            chunk_overlap=100,
+            length_function=len,
             is_separator_regex=False
         )
 
