@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
 import { CiCirclePlus } from "react-icons/ci";
+import { MdDelete } from "react-icons/md";
+
 
 const TestCases = () => {
     const [show, setShow] = useState(false)
@@ -75,59 +77,44 @@ const TestCases = () => {
                     </div>
         </div>
         
-        <div className='flex flex-col gap-5 w-[27rem] h-[34rem] overflow-y-auto'>
-            <div className='flex flex-col gap-2 '>
-                <label htmlFor="">scenario 1</label>
-                <input type="text" name="" id="" className='border p-1 w-96 rounded-lg'/>
+        <div>
+            <div className='relative flex justify-between -mt-8 mb-3 p-1'>
+                <button className='border p-2 rounded bg-white border-purple-700 hover:bg-purple-600 hover:shadow-xl hover:text-white'>
+                    Analyse Scenarios
+                </button>
+                <div className='flex justify-end mr-4 text-xl '>10</div>
             </div>
-            <div className='flex flex-col gap-2 '>
-                <label htmlFor="">scenario 1</label>
-                <input type="text" name="" id="" className='border p-1 w-96 rounded-lg'/>
-            </div>
-            <div className='flex flex-col gap-2 '>
-                <label htmlFor="">scenario 1</label>
-                <input type="text" name="" id="" className='border p-1 w-96 rounded-lg'/>
-            </div>
-            <div className='flex flex-col gap-2 '>
-                <label htmlFor="">scenario 1</label>
-                <input type="text" name="" id="" className='border p-1 w-96 rounded-lg'/>
-            </div>
-            <div className='flex flex-col gap-2 '>
-                <label htmlFor="">scenario 1</label>
-                <input type="text" name="" id="" className='border p-1 w-96 rounded-lg'/>
-            </div>
-            <div className='flex flex-col gap-2 '>
-                <label htmlFor="">scenario 1</label>
-                <input type="text" name="" id="" className='border p-1 w-96 rounded-lg'/>
-            </div>
-            <div className='flex flex-col gap-2 '>
-                <label htmlFor="">scenario 1</label>
-                <input type="text" name="" id="" className='border p-1 w-96 rounded-lg'/>
-            </div>
-            <div className='flex flex-col gap-2 '>
-                <label htmlFor="">scenario 1</label>
-                <input type="text" name="" id="" className='border p-1 w-96 rounded-lg'/>
-            </div>
-            <div className='flex flex-col gap-2 '>
-                <label htmlFor="">scenario 1</label>
-                <input type="text" name="" id="" className='border p-1 w-96 rounded-lg'/>
-            </div>
-            <div className='flex flex-col gap-2 '>
-                <label htmlFor="">scenario 1</label>
-                <input type="text" name="" id="" className='border p-1 w-96 rounded-lg'/>
-            </div>
-            <div className='flex flex-col gap-2 '>
-                <label htmlFor="">scenario 1</label>
-                <input type="text" name="" id="" className='border p-1 w-96 rounded-lg'/>
-            </div>
-
-              <div className='flex flex-col gap-2 '>
-                <label htmlFor="">scenario 1</label>
-                <input type="text" name="" id="" className='border p-1 w-96 rounded-lg'/>
-            </div>
-            <div className='flex flex-col gap-2 '>
-                <label htmlFor="">scenario 1</label>
-                <input type="text" name="" id="" className='border p-1 w-96 rounded-lg'/>
+          
+            <div className='flex flex-col gap-5 w-[38rem] h-[34rem] overflow-y-auto'>
+                <div className='flex flex-col gap-2 border p-2 m-2 rounded'>
+                    <label htmlFor="">Scenario</label>
+                    <input type="text" name="" id="" className='border p-2 w-full rounded'/>
+                    <hr className='mt-4'/>
+                    <label htmlFor="">Expected Output</label>
+                    <input type="text" name="" id="" className='border p-2 w-full rounded'/>
+                    <MdDelete size={20} className='text-purple-900'/>
+                </div>
+                <div className='flex flex-col gap-2 border p-2 m-2 rounded'>
+                    <label htmlFor="">Scenario</label>
+                    <input type="text" name="" id="" className='border p-2 w-full rounded'/>
+                    <hr className='mt-4'/>
+                    <label htmlFor="">Expected Output</label>
+                    <input type="text" name="" id="" className='border p-2 w-full rounded'/>
+                </div>
+                <div className='flex flex-col gap-2 border p-2 m-2 rounded'>
+                    <label htmlFor="">Scenario</label>
+                    <input type="text" name="" id="" className='border p-2 w-full rounded'/>
+                    <hr className='mt-4'/>
+                    <label htmlFor="">Expected Output</label>
+                    <input type="text" name="" id="" className='border p-2 w-full rounded'/>
+                </div>
+                <div className='flex flex-col gap-2 border p-2 m-2 rounded'>
+                    <label htmlFor="">Scenario</label>
+                    <input type="text" name="" id="" className='border p-2 w-full rounded'/>
+                    <hr className='mt-4'/>
+                    <label htmlFor="">Expected Output</label>
+                    <input type="text" name="" id="" className='border p-2 w-full rounded'/>
+                </div>
             </div>
         </div>
     </div>
