@@ -1,26 +1,23 @@
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 import { FileUploader } from "react-drag-drop-files";
 import Api from '../services/service';
 
 const fileTypes = ["JPG", "PNG", "GIF", "PDF"];
 
 const UploadFile = () => {
+  const [view, setView] = useState(false)
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState();
   const [load, setLoad] = useState(false);
+  const fileInputRef = useRef(null);
 
-  const handleChange = (file) => {
-    setFile(file);
-    console.log("can", file)
-    //sendFile()
+  const handleAttachmentIconClick = () => {
+      fileInputRef.current.click();
+  };
+  const handleFileUpload = (event) => {
+      console.log('File uploaded:', event.target.files[0]);
   };
 
-  const sendFile = async() =>{
-    const formData = new FormData();
-    formData.append('file', file);
-    const response = await Api.uploadpdf(formData);
-    console.log("foine", response)
-  }
 
   async function upload_pdf_vector_db() {   
     setLoad(true)
@@ -37,15 +34,27 @@ const UploadFile = () => {
 
   return (
     <>
-      <FileUploader 
-      handleChange={handleChange} 
-      name="file" 
-      types={fileTypes} 
-      />
-      <button onClick={upload_pdf_vector_db}>
-        {load? 'processing...' : 'Process File'}
-      </button>
-      {message}
+       <div className='flex'>
+            <i className="attachment-icon" onClick={handleAttachmentIconClick}> 📎 </i>
+            <input
+                type="file"
+                id="file-input"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                onChange={handleFileUpload}
+            />
+            <style>{`
+                .attachment-icon {
+                cursor: pointer;
+                font-size: 24px;
+                }
+            `}</style>
+
+            <div className='mt-2'>
+                {view? <p className='text-sm text-gray-600'>processing document...</p>:
+                <p className='text-sm'>Upload Document</p>}
+            </div>
+       </div>  
     </>
   );
 }
