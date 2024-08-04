@@ -6,6 +6,7 @@ import Api from '../services/service';
 const TestCases = () => {
     const [view, setView] = useState(false);
     const [show, setShow] = useState(false);
+    const [isanalyse, setAnalyse] = useState(false);
     const [generate, setGenerate] = useState(false);
     const [cases, setCases] = useState([{answer: "Defines the conditions under which the contract can be terminated", prompt: "Interpret the termination clause from the contract"}, 
         {
@@ -29,6 +30,7 @@ const TestCases = () => {
 
     async function generate_cases_prompt() {   
         try{
+            setAnalyse(true)
             localStorage.removeItem("case_prompts");
             const requestOptions = {
                 description: description,
@@ -38,6 +40,7 @@ const TestCases = () => {
             const response = await Api.prompt_generation(requestOptions);
             setCasesPrompt(response.data)
             const case_prompts = localStorage.setItem("case_prompts", JSON.stringify(response.data));
+            setAnalyse(false)
         } catch(error){
             console.log("error", error)
         }
@@ -49,10 +52,8 @@ const TestCases = () => {
             description: description,
             number_of_tests: amount
             };
-            console.log("kill", requestOptions)
             const response = await Api.generate_test_cases(requestOptions);
             setCases(response.data)
-            console.log("ovho", response.data)
             setView(true)
             setGenerate(false);
             setShow(false);
@@ -63,6 +64,12 @@ const TestCases = () => {
 
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
+    };
+    
+    const deletePrompt = (index) => {
+        const updatedPrompts = [...cases];
+        updatedPrompts.splice(index, 1);
+        setCases(updatedPrompts);
     };
     
     
@@ -101,13 +108,13 @@ const TestCases = () => {
                         </button>
                         ) : (
                         <button
-                            className="border border-purple-700 w-32 p-1 rounded-lg"
+                            className="border border-purple-700 w-32 p-1 rounded-lg bg-purple-600"
                             onClick={scenario}
                         >
-                            <p className="flex justify-center">
-                            <CiCirclePlus size={22} className="mt-1 text-purple-600" />
-                            <p className="mt-1">Scenario</p>
+                            <p className="inline-block">
+                                <CiCirclePlus size={22} className="mt-1 text-white" />                            
                             </p>
+                            <span className="text-white font-bold">Scenario</span>
                         </button>
                         )}
 
@@ -129,7 +136,7 @@ const TestCases = () => {
                     <button 
                         onClick={generate_cases_prompt}
                         className='border p-2 rounded bg-white border-purple-700 hover:bg-purple-600 hover:shadow-xl hover:text-white'>
-                        Analyse Scenarios
+                        {isanalyse ? 'Analysing...':'Analyse Scenarios'}
                     </button>
                     <div className='flex justify-end mr-4 text-xl bg-purple-900 w-7 h-7 rounded-full px-2 text-white'>{cases?.length}</div>
                 </div>
@@ -142,7 +149,7 @@ const TestCases = () => {
                                 type="text" 
                                 name={`scenario-${item.prompt}`} 
                                 id={`scenario-${index}`} 
-                                value={item.prompt} 
+                                defaultValue={item.prompt} 
                                 className='border p-2 w-full rounded'
                             />
                             <hr className='mt-4'/>
@@ -151,10 +158,10 @@ const TestCases = () => {
                                 type="text" 
                                 name={`expected-output-${item.answer}`} 
                                 id={`expected-output-${index}`} 
-                                value={item.answer} 
+                                defaultValue={item.answer} 
                                 className='border p-2 w-full rounded'
                             />
-                            <MdDelete size={20} className='text-purple-900'/>
+                            <MdDelete onClick={() => deletePrompt(index)} size={20} className='text-purple-900 cursor-pointer'/>
                         </div>
                     ))}
                 </div>
