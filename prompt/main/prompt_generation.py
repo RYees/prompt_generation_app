@@ -4,6 +4,7 @@ from prompt.main.base import (
 from prompt.utils.database import fetch_stored_embedding_from_promptdb
 from prompt.utils.reranking import CrossEncoderReranker
 from prompt.utils.file import FileReader
+from prompt.utils.prompt_evalutation import prompt_evaluation, test_case_evaluation
 import os, json
 import openai
 from langchain_community.vectorstores import FAISS
@@ -90,7 +91,9 @@ class PromptGenerationForTestCases(BaseResource):
 
             for i in outputs.choices:
                 candidate_prompts.append(i.message.content)
-            return candidate_prompts
+   
+            eval_test_cases = test_case_evaluation(candidate_prompts)
+            return eval_test_cases
         except Exception as e:
             return f'Error: {str(e)}'    
     # test on the prompts is needed here on the candidate prompts
@@ -105,7 +108,10 @@ class SimilaritySearchPromptGenerate(BaseResource):
             context = vector_store.similarity_search(user_picked_prompt)
             ranked_docs = CrossEncoderReranker.cross_encoder_reranker(user_picked_prompt, context)
             final_prompts_from_the_rag = self.generate_candidate_prompts(user_picked_prompt, ranked_docs, number_of_prompts)
-            return final_prompts_from_the_rag
+            print(final_prompts_from_the_rag)
+            eval_final_prompts = prompt_evaluation(final_prompts_from_the_rag)
+
+            return eval_final_prompts
         except Exception as e:
             return f'Error: {str(e)}'    
     

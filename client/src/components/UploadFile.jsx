@@ -28,9 +28,8 @@ const UploadFile = () => {
     const response = await Api.uploadpdf(requestOptions);
     console.log("ov", response.data.response)
     setMessage("Analysing the document done! Ready to answer your questions.")
-    setLoad(false)
-     
-}
+    setLoad(false) 
+  }
 
   return (
     <>
