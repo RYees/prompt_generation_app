@@ -37,7 +37,7 @@ Steps to do run the project:
 ``` 
    git clone https://github.com/RYees/prompt_generation_app.git
 ```
-   cd rag_contract_implementation
+   cd prompt_generation_app
    
 ```      
    poetry add
