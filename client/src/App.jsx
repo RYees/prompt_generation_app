@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Home, Prompt } from "./pages/index";
 
@@ -17,6 +17,10 @@ function AppWithRouter() {
   const [displayLocation, setDisplayLocation] = React.useState(location);
   const [transitionStage, setTransistionStage] = React.useState("fadeIn");
 
+  // useEffect(()=>{
+  //   localStorage.clear();
+  // })
+  
   React.useEffect(() => {
     if (location !== displayLocation) setTransistionStage("fadeOut");
   }, [location, displayLocation]);

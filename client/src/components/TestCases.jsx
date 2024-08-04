@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { CiCirclePlus } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import Api from '../services/service';
@@ -8,10 +8,8 @@ const TestCases = () => {
     const [show, setShow] = useState(false);
     const [isanalyse, setAnalyse] = useState(false);
     const [generate, setGenerate] = useState(false);
-    const [cases, setCases] = useState([{answer: "Defines the conditions under which the contract can be terminated", prompt: "Interpret the termination clause from the contract"}, 
-        {
-        answer: "Outlines who can share what information and the penalties if breached", prompt:  "Explain the confidentiality provision in the legal contract"}]);
-    const [caseprompts, setCasesPrompt] = useState([]);
+    const [isgenerate, setGenerating] = useState(false);
+    const [cases, setCases] = useState([]);
     const [amount, setAmount] = useState(2);
     const [description, setDescription] = useState('');
 
@@ -38,7 +36,6 @@ const TestCases = () => {
                 number_of_prompts: amount
             };
             const response = await Api.prompt_generation(requestOptions);
-            setCasesPrompt(response.data)
             const case_prompts = localStorage.setItem("case_prompts", JSON.stringify(response.data));
             setAnalyse(false)
         } catch(error){
@@ -48,14 +45,17 @@ const TestCases = () => {
 
     async function generate_test_cases() {   
         try{
+            setGenerating(true)
             const requestOptions = {
-            description: description,
-            number_of_tests: amount
+                description: description,
+                number_of_tests: amount
             };
             const response = await Api.generate_test_cases(requestOptions);
             setCases(response.data)
+            const case_prompts = localStorage.setItem("test_cases", JSON.stringify(response.data));
             setView(true)
             setGenerate(false);
+            setGenerating(false);
             setShow(false);
         } catch(error){
             console.log("error", error)
@@ -72,6 +72,22 @@ const TestCases = () => {
         setCases(updatedPrompts);
     };
     
+    useEffect(() => {
+        if(localStorage.getItem("test_cases") !== null){
+          const case_testString = localStorage.getItem("test_cases");
+          if (case_testString) {
+            try {
+              const case_testArray = JSON.parse(case_testString);
+              setCases(case_testArray);
+            } catch (error) {
+              console.error("Error parsing test_case from localStorage:", error);
+              setCases([]);
+            }
+          } else {
+            setCases([]);
+          }
+        }
+      }, []);
     
    return (
     <div className='flex m-10 gap-44'>
@@ -101,10 +117,10 @@ const TestCases = () => {
             <div className="flex">
                         {generate ? (
                         <button
-                            className="border border-purple-700 w-32 text-white p-1 rounded-lg bg-purple-600"
+                            className="border border-purple-700 w-32 text-white p-1 rounded-lg bg-purple-600 hover:brightness-110 hover:shadow-xl"
                             onClick={generate_test_cases}
                         >
-                            Generate
+                            {isgenerate?'generating...':'Generate'}
                         </button>
                         ) : (
                         <button
@@ -164,9 +180,15 @@ const TestCases = () => {
                             <MdDelete onClick={() => deletePrompt(index)} size={20} className='text-purple-900 cursor-pointer'/>
                         </div>
                     ))}
+                    {cases.length === 0?
+                    <div className='text-gray-200 italic text-center my-auto text-5xl'>
+                        <p>prompt generation</p>
+                    </div> : null} 
                 </div>
             </div>
-        :null}
+        :
+          null
+        }
     </div>
   )
 }

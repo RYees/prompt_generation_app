@@ -43,7 +43,7 @@ const FinalPrompts = () => {
       <div className='bg-purple-50 rounded-br-full mt-3 rounded-tr-full shadow-xl'>
          <p className='text-3xl flex flex-col items-center justify-center h-full px-5'>
           Final Prompts
-         <small className='text-sm text-gray-500'>according to the document</small>
+         <small className='text-sm text-gray-500'>compared to the document</small>
           </p>
         
       </div>

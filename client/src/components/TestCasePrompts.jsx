@@ -49,10 +49,16 @@ const TestCasePrompts = () => {
 
 
   return (
-    <div className='flex gap-64'>
+    <div className='flex gap-56'>
 
       <div className='bg-purple-50 rounded-br-full mt-3 rounded-tr-full shadow-xl'>
-         <p className='text-3xl flex items-center justify-center h-full px-5'>Generated Prompts</p>
+        <p className='text-3xl flex flex-col items-center justify-center h-full px-5'>
+          Generated Prompts
+          <small className='text-sm text-gray-500'>based on the scenarios</small>
+          <br />
+          <small className='text-sm text-gray-300'>monte_carlo(MC) and elo_rating(EL) scores</small>
+          <small className='text-sm text-gray-300'>are attached to each prompt</small>
+        </p>        
       </div>
 
       <div className='flex flex-col gap-2 h-[35rem] overflow-auto'>
@@ -70,7 +76,7 @@ const TestCasePrompts = () => {
                  <small>ER</small> {item?.elo_rating}
               </p>
               <button
-                className=' shadow-lg p-2 text-sm bg-gradient-to-l from-purple-800 to-purple-200 text-white font-bold rounded-full hover:brightness-110'
+                className=' shadow-lg p-2 mx-1 text-sm bg-gradient-to-l from-purple-800 to-purple-200 text-white font-bold rounded-full hover:brightness-110'
                 onClick={() => {
                   generate_candidate_prompts(item.test_case);
                   setComparingIndex(index);
