@@ -35,7 +35,7 @@ Getting Started:
 Steps to do run the project:
 * Run the below commands
 ``` 
-   git clone https://github.com/RYees/rag_contract_implementation.git
+   git clone https://github.com/RYees/prompt_generation_app.git
 ```
    cd rag_contract_implementation
    
