@@ -1,4 +1,4 @@
-# Legal Contract Analyser
+# Prompt Generator Application
 Finding the right prompts to kickstart the creative process can be a significant challenge. To address this, our team has developed an innovative prompt generation application that leverages the power of Retrieval-Augmented Generation (RAG) technology.
 
 This application is designed to empower users by providing them with tailored prompts that are tailored to their specific needs and scenarios.
@@ -38,13 +38,14 @@ Steps to do run the project:
    git clone https://github.com/RYees/prompt_generation_app.git
 ```
    cd prompt_generation_app
-   
+
+* TO START THE APP
+   * you need to have .env file with the necessary keys OPEN_API_KEY, SUPABASE_URL, SUPABASE_KEY
 ```      
-   poetry add
+   make up
 ```
+* TO STOP THE APP
 ```
-   yarn add
+   make stop
 ```
-```
-   yarn
-```
+
