@@ -17,23 +17,27 @@ from dotenv import dotenv_values
 env_vars = dotenv_values('../.env')
 openai.api_key = env_vars.get('OPENAI_API_KEY')
 openai_client = openai.OpenAI(api_key=openai.api_key)
-supabase_url = env_vars.get('SUPABASE_URL')
-supabase_key = env_vars.get('SUPABASE_KEY')
+supabase_url=env_vars.get('SUPABASE_URL')
+supabase_key=env_vars.get('SUPABASE_KEY')
 
 def store_to_supabase_for_promptdb(docs: list):
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-small", openai_api_key=openai.api_key)
-    supabase_client = create_client(supabase_url, supabase_key)
-    vector_store = SupabaseVectorStore.from_documents(
-        docs,
-        embeddings,
-        client=supabase_client,
-        table_name="prompts",
-        query_name="match_prompts",
-        chunk_size=500,
-    )
-    return "vector_store"
+    try:
+        embeddings = OpenAIEmbeddings(model="text-embedding-3-small", openai_api_key=openai.api_key)
+        supabase_client = create_client(supabase_url, supabase_key)
+        vector_store = SupabaseVectorStore.from_documents(
+            docs,
+            embeddings,
+            client=supabase_client,
+            table_name="prompts",
+            query_name="match_prompts",
+            chunk_size=500,
+        )
+        return vector_store
+    except Exception as e:
+        return f'Error: {str(e)}'    
 
 def fetch_stored_embedding_from_promptdb():
+    print(env_vars.get('SUPABASE_URL'))
     embeddings = OpenAIEmbeddings(model="text-embedding-3-small", openai_api_key=openai.api_key)
     supabase_client = create_client(supabase_url, supabase_key)
     vector_store = SupabaseVectorStore(
@@ -43,7 +47,7 @@ def fetch_stored_embedding_from_promptdb():
         query_name="match_prompts",
     )
     return vector_store
-
+    
 def db_connection_psycopg():    
     try:
         pgconn = ps.connect(dbname="postgres",
